@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            }
+
+            .title {
+            color: grey;
+            font-size: 18px;
+            }
+
+            button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            }
+
+            a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+            }
+
+            button:hover, a:hover {
+            opacity: 0.7;
+            }
+    </style>
+</head>
+<body>
+    <!--    0	UNSENT	Client has been created. open() not called yet.
+            1	OPENED	open() has been called.
+            2	HEADERS_RECEIVED	send() has been called, and headers and status are available.
+            3	LOADING	Downloading; responseText holds partial data.
+            4	DONE	The operation is complete. -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <div class="card">
+        <img id="avatar" src="" alt="avatar" style="width:100%">
+        <h1 id="name"></h1>
+        <p class="title"></p>
+        <p id="bio">Harvard University</p>
+        <a href="#"><i class="fa fa-dribbble"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <p><button>Contact</button></p>
+    </div>
+</body>
+<script>
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl)
+    xhr.onreadystatechange = function(){
+        console.log(xhr.readyState);
+        if (xhr.readyState === 4) {
+            const data = JSON.parse(this.responseText)
+            console.log(typeof data);
+            console.log(data);
+
+            document.getElementById('name').innerText = data.name;
+            document.querySelector('.title').innerText = "Followers : "+data.followers;
+            document.querySelector('#avatar').setAttribute('src', data.avatar_url)
+            document.querySelector('#bio').innerText = data.bio;
+        }
+    }
+    xhr.send();
+</script>
+</html>
